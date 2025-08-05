@@ -19,7 +19,7 @@ services:
       - zabbix_server_data:/var/lib/zabbix
     networks:
       - zabbix_network
- 
+
   zabbix-web:
     image: zabbix/zabbix-web-nginx-mysql:latest
     container_name: zabbix-web
