@@ -19,7 +19,7 @@ services:
       - zabbix_server_data:/var/lib/zabbix
     networks:
       - zabbix_network
-
+ 
   zabbix-web:
     image: zabbix/zabbix-web-nginx-mysql:latest
     container_name: zabbix-web
@@ -40,13 +40,11 @@ services:
       - zabbix_network
     depends_on:
       - zabbix-server
-
 # Define a rede que será usada pelos contêineres
 networks:
   zabbix_network:
     # Marca a rede como externa, pois já a criamos manualmente
     external: true
-
 # Define os volumes para persistência de dados
 volumes:
   zabbix_server_data: {}
