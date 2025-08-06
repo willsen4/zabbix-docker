@@ -21,6 +21,7 @@ nano docker-compose.yml
 #Recria o conteiner
 docker compose up -d
 
+docker-compose logs zabbix-server
 ------------------
  
 #Comandos no shell do MySQL:
@@ -34,6 +35,8 @@ docker exec -it mysql-app mysql -uroot -p
 #Lista os usuários criados no MySQL (localhost são usuários com permissão local / % são usuários permissões remotas)
 SELECT user, host FROM mysql.user;
 
+docker exec -it mysql-app mysql -uroot -p
+
 #Alterar senha
 SQL
 ALTER USER 'seu_user'@'%' IDENTIFIED BY 'SUA_NOVA_SENHA_FORTE';
@@ -42,3 +45,5 @@ FLUSH PRIVILEGES;
 EXIT;
 
 DROP DATABASE nome_do_banco;
+
+DROP DATABASE IF EXISTS zabbix_db; DROP USER IF EXISTS 'zabbix_user'@'%';
