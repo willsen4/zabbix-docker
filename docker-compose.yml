@@ -29,7 +29,7 @@ services:
     depends_on:
       - zabbix-server
     ports:
-      - "8070:8070"
+      - "8070:8080"
       - "8443:8443"
     networks:
       - zabbix_network
