@@ -49,6 +49,7 @@ services:
 
 networks:
   zabbix_network:
+    name: zabbix_network # <--- ESTA LINHA GARANTE O NOME EXATO DA REDE
     driver: bridge
   mysql_network:
     external: true   # <-- Importante! usa a rede já existente
