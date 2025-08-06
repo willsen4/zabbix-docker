@@ -1,50 +1,54 @@
+version: '3.5'
+
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-mysql:latest
+    image: zabbix/zabbix-server-mysql:alpine-latest
     container_name: zabbix-server
-    restart: always
-    # Mapeia a porta do Zabbix Agent para a máquina host (opcional, se for monitorar o próprio host)
+    environment:
+      DB_SERVER_HOST: mysql-app        # Nome do container MySQL
+      MYSQL_DATABASE: zabbix_db        # Banco que você vai criar no MySQL
+      MYSQL_USER: zabbix_user          # Usuário MySQL
+      MYSQL_PASSWORD: sua_senha_segura      # Senha do usuário
     ports:
       - "10051:10051"
-    environment:
-      # --- ATENÇÃO AQUI ---
-      # Use o NOME do seu contêiner MySQL. O Docker resolverá o IP automaticamente
-      # através da rede compartilhada 'zabbix_network'.
-      - DB_SERVER_HOST="mysql-app"
-      - MYSQL_DATABASE="zabbix_db"
-      - MYSQL_USER="zabbix_user"
-      - MYSQL_PASSWORD="sua_senha_segura" # A mesma senha que você criou no Passo 2
-    volumes:
-      # Volume para manter dados persistentes de alertas, etc.
-      - zabbix_server_data:/var/lib/zabbix
     networks:
       - zabbix_network
+      - mysql_network
+    restart: always
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:latest
+    image: zabbix/zabbix-web-nginx-mysql:alpine-latest
     container_name: zabbix-web
-    restart: always
-    # Mapeia a porta 8070 da máquina host para a porta 8070 do contêiner.
-    # Você acessará o Zabbix em http://<IP_DO_SEU_SERVIDOR>:8070
+    environment:
+      DB_SERVER_HOST: mysql-app
+      MYSQL_DATABASE: zabbix_db
+      MYSQL_USER: zabbix_user
+      MYSQL_PASSWORD: sua_senha_segura
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: America/Sao_Paulo
+    depends_on:
+      - zabbix-server
     ports:
       - "8070:8070"
       - "8443:8443"
-    environment:
-      - DB_SERVER_HOST="mysql-app"
-      - MYSQL_DATABASE="zabbix_db"
-      - MYSQL_USER="zabbix_user"
-      - MYSQL_PASSWORD="sua_senha_segura" # A mesma senha novamente
-      - ZBX_SERVER_HOST="zabbix-server" # Aponta para o serviço zabbix-server definido acima
-      - PHP_TZ="America/Sao_Paulo" # Fuso horário para a interface web
     networks:
       - zabbix_network
+      - mysql_network
+    restart: always
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent:alpine-latest
+    container_name: zabbix-agent
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
     depends_on:
       - zabbix-server
-# Define a rede que será usada pelos contêineres
+    networks:
+      - zabbix_network
+    restart: always
+
 networks:
   zabbix_network:
-    # Marca a rede como externa, pois já a criamos manualmente
-    external: true
-# Define os volumes para persistência de dados
-volumes:
-  zabbix_server_data: {}
+    driver: bridge
+  mysql_network:
+    external: true   # <-- Importante! usa a rede já existente

@@ -13,18 +13,7 @@ docker exec -it mysql-app mysql -uroot -p
 ### Depois crie o banco e o usuário:
 SQL
 ### Usar os comandos que estão no arquivo SQL.sql
-----------------
-### Criar a Rede Docker e Conectar o MySQL para que os novos contêineres do Zabbix possam "enxergar" seu contêiner MySQL pelo nome, a melhor prática é colocá-los na mesma rede Docker.
-### Crie uma nova rede Docker:
-````Bash
-docker network create zabbix_network
-````
 -----------------
-### Conecte seu contêiner MySQL existente a essa nova rede:
-````Bash
-docker network connect zabbix_network mysql-app
-````
-----------------
 ### Crie um diretório para o zabbix:
 ````Bash
 mkdir zabbix-docker
