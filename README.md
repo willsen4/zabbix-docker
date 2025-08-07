@@ -49,7 +49,10 @@ docker-compose logs -f
 ### Você verá a tela de login do Zabbix. As credenciais padrão são:
 * Usuário: Admin (com 'A' maiúsculo)
 * Senha: zabbix
+---------------
+### Se o Host Zabbix Server não estiver funcionando no Dashboard do Zabbix, só editar o Host colocando o ip do Zabbix-agent na Interface.
 
 # FIM
+
 
 
