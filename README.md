@@ -1,5 +1,8 @@
 ﻿# Instalando zabbix com Docker
-## A melhor abordagem para gerenciar múltiplos contêineres que precisam se comunicar, como o Zabbix e o MySQL, é usar o Docker Compose.Ele permite que você defina e execute sua aplicação multi-contêiner com um único arquivo de configuração.
+
+## O Zabbix é um software de código aberto usado para monitorar redes, servidores, dispositivos virtuais e serviços em nuvem.
+ 
+### A melhor abordagem para gerenciar múltiplos contêineres que precisam se comunicar, como o Zabbix e o MySQL, é usar o Docker Compose.Ele permite que você defina e execute sua aplicação multi-contêiner com um único arquivo de configuração.
 
 ## Vamos seguir os passos abaixo:
 ### Preparar o Banco de Dados para o Zabbix
@@ -48,4 +51,5 @@ docker-compose logs -f
 * Senha: zabbix
 
 # FIM
+
 
