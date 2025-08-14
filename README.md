@@ -20,6 +20,8 @@ SQL
 ### Crie um diretório para o zabbix:
 ````Bash
 mkdir zabbix-docker
+````
+````Bash
 cd zabbix-docker
 ````
 -------------
@@ -53,6 +55,7 @@ docker-compose logs -f
 ### Se o Host Zabbix Server não estiver funcionando no Dashboard do Zabbix, só editar o Host colocando o ip do Zabbix-agent na Interface.
 
 # FIM
+
 
 
 
